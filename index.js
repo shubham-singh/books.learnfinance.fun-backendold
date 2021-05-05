@@ -2,8 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dbConnect = require('./db/db.connect.js');
 const cors = require('cors');
-
-const Product = require('./models/product.model.js');
+const bookRoute = require('./routes/book.route');
+const Book = require('./models/book.model.js');
 
 const app = express();
 
@@ -15,10 +15,12 @@ app.use(cors());
 
 app.use(express.json());
 
+app.use('/book', bookRoute);
+
 app.get('/', async (req, res) => {
   try {
-    const products = await Product.find({});
-    res.json({success: true, products});
+    const books = await Book.find({});
+    res.json({success: true, books});
   } catch(err) {
     res.json({success: false, errorMessage: err.message});
   }
@@ -26,10 +28,10 @@ app.get('/', async (req, res) => {
 
 app.post('/', async (req, res) => {
   try {
-    const product = req.body;
-    const NewProduct = new Product(product);
-    const savedProduct = await NewProduct.save();
-    res.json({success: true, product: savedProduct})
+    const book = req.body;
+    const NewBook = new Book(book);
+    const savedBook = await NewBook.save();
+    res.json({success: true, book: savedBook})
   } catch(err) {
     res.status(500).json({
       success: false,
@@ -40,5 +42,4 @@ app.post('/', async (req, res) => {
 })
 
 
-// app.listen(3000, () => console.log('server started'));
-app.listen(process.env.PORT, '0.0.0.0');
+app.listen(process.env.PORT || 3000, '0.0.0.0');

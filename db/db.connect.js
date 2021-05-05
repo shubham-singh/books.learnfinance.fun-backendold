@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 
-const dbURI = 'mongodb+srv://shubham:2pQQtOwM1yQNQInq@neog-cluster.wiph4.mongodb.net/inventory';
-// const dbURI = 'mongodb+srv://shubham:2pQQtOwM1yQNQInq@neog-cluster.wiph4.mongodb.net/test';
+const username = process.env['username'];
+const password = process.env['password'];
+
+const dbURI = `mongodb+srv://${username}:${password}@neog-cluster.wiph4.mongodb.net/books`;
 
 const dbConnect = async () => {
   try {
@@ -9,9 +11,9 @@ const dbConnect = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true
     });
-    console.log('successfully connected to databse');
+    console.log("Successfully connected to database");
   } catch (error) {
-    console.log("Database connection failed");
+    console.error("Database connection failed")
   }
 }
 
