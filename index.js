@@ -20,7 +20,7 @@ app.use('/book', bookRoute);
 app.get('/', async (req, res) => {
   try {
     const books = await Book.find({});
-    res.json({success: true, books});
+    res.json({success: true, products: books});
   } catch(err) {
     res.json({success: false, errorMessage: err.message});
   }
